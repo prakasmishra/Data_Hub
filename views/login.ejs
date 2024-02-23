@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection</title>
+    <style>
+        /* Add your CSS styles here */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .data-item {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        
+        .data-item img {
+            height: 10%;
+            width: 20%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .data-item-content {
+            margin-top: 10px;
+        }
+        .download-link {
+            display: block;
+            margin-top: 10px;
+            text-align: right;
+        }
+        .upload-form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Data Collection</h1>
+    <% if (files.length === 0) { %>
+        <p>There are no files available.</p>
+        <% } else { %>
+    <% files.forEach(file => { %>
+        <div class="data-item">
+            <a href="../uploads/<%= username %>/<%= file.filename %>"><img src="../uploads/<%= username %>/<%= file.filename %>" alt="<%= file.filename %>" ></a>
+            <div class="data-item-content">
+                <p>Filename: <%= file.filename %></p>
+                <p>File Type: <%= file.type %></p>
+                <p>File Size: <%= file.size %> bytes</p>
+                <a href="/download/<%= username %>/<%= file.filename %>" class="download-link" download>Download</a>
+            </div>
+        </div>
+        <% }); %>
+        <% } %>
+
+    <!-- Upload form -->
+    <form class="upload-form" action="/upload/<%= username %>" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*, .txt" required>
+       
+        <button type="submit">Upload</button>
+    </form>
+</div>
+</body>
+</html>
